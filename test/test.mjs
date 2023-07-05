@@ -1,11 +1,11 @@
 //lol, testing itself?
 import * as chaiModule from 'chai';
+import { chai } from '../environment-safe-chai.mjs';
 const should = ((
    typeof process === 'object' && 
    typeof process.versions === 'object' && 
    typeof process.versions.node !== 'undefined'
 )?chaiModule:window.chai).should();
-import { chai } from '../environment-safe-chai.js'
 
 describe('environment-safe-chai', ()=>{
    describe('performs a simple test suite', ()=>{
