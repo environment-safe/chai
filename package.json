@@ -1,32 +1,96 @@
 {
-    "name":"environment-safe-chai",
-    "version":"0.1.0",
-    "main":"environment-safe-chai.mjs",
+    "name": "@environment-safe/chai",
+    "version": "0.1.0",
+    "type": "module",
+    "main": "dist/index.cjs",
+    "module": "src/index.mjs",
+    "commonjs": "dist/index.cjs",
     "exports": {
         ".": {
-          "import": "./environment-safe-chai.mjs",
-          "require": "./environment-safe-chai.cjs"
+            "import": "./src/index.mjs",
+            "require": "./dist/index.cjs"
         },
-        "./environment-safe-chai.js": {
-          "import": "./environment-safe-chai.mjs",
-          "require": "./environment-safe-chai.cjs"
+        "./chai.js": {
+            "import": "./src/index.mjs",
+            "require": "./dist/index.cjs"
+        },
+        "./index.js": {
+            "import": "./src/index.mjs",
+            "require": "./dist/index.cjs"
         }
-    } ,
-    "module":"environment-safe-chai.mjs",
-    "commonjs":"environment-safe-chai.cjs",
-    "devDependencies":{
-        "chai":"^4.3.7",
-        "mocha":"^10.2.0"
     },
-    "type":"module",
-    "scripts":{
-        "lint":"./node_modules/.bin/eslint *.js src/*.js test/*.js",
-        "import-test":"./node_modules/.bin/mocha test/test.mjs",
-        "require-test":"./node_modules/.bin/mocha test/test.mjs",
-        "test":"npm run require-test; npm run import-test",
-        "browser-test":"open http://localhost:8000/test/test.html; npx http-server -p 8000","container-test":"docker build . -t environment-safe-chai -f ./containers/test.dockerfile; docker logs --follow \"$(docker run -d environment-safe-chai)\""
+    "homepage": "https://github.com/environment-safe/chai",
+    "description": "Import chai in a uniform way across commonjs/modules and node/browser",
+    "keywords": [
+        "chai",
+        "browser",
+        "import",
+        "native",
+        "esmodule"
+    ],
+    "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
+    "contributors": [],
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:environment-safe/chai.git"
     },
-    "dependencies":{
-        "browser-or-node":"^2.1.1"
+    "bugs": {
+        "url": "https://github.com/environment-safe/chai/issues"
+    },
+    "license": "MIT",
+    "moka": {
+        "firefox": {
+            "engine": "@open-automaton/playwright-mining-engine",
+            "options": {
+                "type": "firefox"
+            }
+        },
+        "chrome": {
+            "engine": "@open-automaton/playwright-mining-engine",
+            "options": {
+                "type": "chromium"
+            }
+        },
+        "safari": {
+            "engine": "@open-automaton/playwright-mining-engine",
+            "options": {
+                "type": "webkit"
+            }
+        },
+        "stub": "node_modules/@open-automaton/moka/src/stub.mjs",
+        "stubs": [
+            "express",
+            "module",
+            "path",
+            "@babel/cli",
+            "@babel"
+        ],
+        "shims": {
+            "chai": "node_modules/chai/chai.js",
+            "browser-or-node": "node_modules/browser-or-node/src/index.js"
+        }
+    },
+    "devDependencies": {
+        "@open-automaton/moka": "^0.0.2",
+        "chai": "^4.3.7",
+        "husky": "^8.0.3",
+        "mocha": "^10.2.0"
+    },
+    "scripts": {
+        "lint": "./node_modules/.bin/eslint src/*.mjs test/*.mjs",
+        "import-test": "mocha test/test.mjs",
+        "require-test": "mocha test/test.cjs",
+        "test": "npm run require-test; npm run import-test",
+        "headless-browser-test": "npm run headless-chrome-test; npm run headless-firefox-test; npm run headless-safari-test",
+        "headless-chrome-test": "moka --server . --browser chrome  --relaxed --prefix ../ test/test.mjs",
+        "headless-firefox-test": "moka --server . --browser firefox --relaxed --prefix ../ test/test.mjs",
+        "headless-safari-test": "moka --server . --browser safari --relaxed --prefix ../ test/test.mjs",
+        "browser-test": "moka --server . --local-browser --relaxed --prefix ../ test/test.mjs",
+        "container-test": "docker build . -t environment-safe-chai -f ./containers/test.dockerfile; docker logs --follow \"$(docker run -d environment-safe-chai)\"",
+        "prepare": "husky install"
+    },
+    "dependencies": {
+        "browser-or-node": "^2.1.1",
+        "eslint": "^8.44.0"
     }
 }

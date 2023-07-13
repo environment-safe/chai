@@ -18,3 +18,9 @@ import it with:
 ```javascript
 import { chai } from 'environment-safe-chai'; 
 ```
+
+require it with (only supported in the browser via babel/webpack/browserify):
+
+```javascript
+const { chai } = require( 'environment-safe-chai'); 
+```
