@@ -1,6 +1,6 @@
 {
     "name": "@environment-safe/chai",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "type": "module",
     "main": "dist/index.cjs",
     "module": "src/index.mjs",
@@ -9,6 +9,10 @@
         ".": {
             "import": "./src/index.mjs",
             "require": "./dist/index.cjs"
+        },
+        "./package.json": {
+            "import": "./package.json",
+            "require": "./package.json"
         },
         "./chai.js": {
             "import": "./src/index.mjs",
